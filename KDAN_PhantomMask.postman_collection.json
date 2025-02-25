@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "9f4a3945-97f2-4884-827a-6e6ef2a45823",
+		"name": "KDAN_PhantomMask",
+		"description": "Tasks:  \n1\\. List all pharmacies open at a specific time and on a day of the week if requested.  \n2\\. List all masks sold by a given pharmacy, sorted by mask name or price.  \n3\\. List all pharmacies with more or less than x mask products within a price range.  \n4\\. The top x users by total transaction amount of masks within a date range.  \n5\\. The total amount of masks and dollar value of transactions within a date range.  \n6\\. Search for pharmacies or masks by name, ranked by relevance to the search term.  \n7\\. Process a user purchases a mask from a pharmacy, and handle all relevant data changes in an atomic transaction.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13103506"
+	},
+	"item": [
+		{
+			"name": "/api/transactions/top-users",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/top-users?startDate=2021-01-01&endDate=2021-02-01&limit=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"top-users"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2021-01-01",
+							"description": "格式 yyyy-mm-dd"
+						},
+						{
+							"key": "endDate",
+							"value": "2021-02-01",
+							"description": "格式 yyyy-mm-dd"
+						},
+						{
+							"key": "limit",
+							"value": "3",
+							"description": "欲查詢多少位使用者"
+						}
+					]
+				},
+				"description": "取得特定區間內的最高金額交易筆數資料"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/pharmacies",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pharmacies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pharmacies"
+					]
+				},
+				"description": "取得全部藥局資料"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/users",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "取得全部用戶資料"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/purchase",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 1,     //selectedUser - Yvonne Guerrero\n    \"pharmacyId\": 1, //selectedPharmacy - DFW Wellness\n    \"maskId\": 3,     //selectedMask - Second Smile (black) (10 per pack)\n    \"quantity\": 1    // >0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/purchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"purchase"
+					]
+				},
+				"description": "使用者購買口罩"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/transactions/total",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/total?startDate=2021-01-01&endDate=2021-02-01&limit=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"total"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2021-01-01",
+							"description": "格式 yyyy-mm-dd"
+						},
+						{
+							"key": "endDate",
+							"value": "2021-02-01",
+							"description": "格式 yyyy-mm-dd"
+						},
+						{
+							"key": "limit",
+							"value": "3",
+							"description": "欲查詢多少筆資料"
+						}
+					]
+				},
+				"description": "取得特定區間內的交易總額與口罩數量"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/pharmacies/open",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pharmacies/open?day=Monday&time=00:30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pharmacies",
+						"open"
+					],
+					"query": [
+						{
+							"key": "day",
+							"value": "Monday",
+							"description": "Mon - Sun"
+						},
+						{
+							"key": "time",
+							"value": "00:30",
+							"description": "00:00 - 23:59"
+						}
+					]
+				},
+				"description": "取得符合條件有營業的藥局資料"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/pharmacies/${selectedPharmacy}/masks?sortBy=${sortBy}",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pharmacies/1/masks?sortBy=price",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pharmacies",
+						"1",
+						"masks"
+					],
+					"query": [
+						{
+							"key": "$selectedPharmacy",
+							"value": "1",
+							"description": "1 - 20",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "price",
+							"description": "name or price"
+						}
+					]
+				},
+				"description": "按口罩名稱或價格排序以列出特定藥局銷售的所有口罩"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/pharmacies/filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pharmacies/filter?comparison=greater&qty=1&minPrice=1&maxPrice=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pharmacies",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "comparison",
+							"value": "greater",
+							"description": "greater or less"
+						},
+						{
+							"key": "qty",
+							"value": "1",
+							"description": "欲查訊數量"
+						},
+						{
+							"key": "minPrice",
+							"value": "1",
+							"description": "最小金額範圍"
+						},
+						{
+							"key": "maxPrice",
+							"value": "99",
+							"description": "最大金額範圍"
+						}
+					]
+				},
+				"description": "列出特定口罩數量及價錢範圍的藥局"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/pharmacies/search",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/pharmacies/search?query=Sec&type=mask",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pharmacies",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Sec",
+							"description": "查詢關鍵字"
+						},
+						{
+							"key": "type",
+							"value": "mask",
+							"description": "pharmacy or mask"
+						}
+					]
+				},
+				"description": "搜尋包含關鍵字的口罩或藥局"
+			},
+			"response": []
+		}
+	]
+}
