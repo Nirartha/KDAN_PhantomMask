@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  name             String
+  cashBalance      Decimal            @db.Decimal(10, 2)
+  purchaseHistories PurchaseHistory[]  // 用戶的購買歷史紀錄
+}
+
+model Pharmacy {
+  id             Int       @id @default(autoincrement())
+  name           String
+  cashBalance    Decimal   @db.Decimal(10, 2)
+  opening_hours  Json      // 用於儲存營業時間，使用 JSON 格式
+  masks          Mask[]    // 一個藥局有多個口罩
+  transactions   PurchaseHistory[]  // 一個藥局有多筆交易
+}
+
+model Mask {
+  id          Int    @id @default(autoincrement())
+  name        String
+  price       Decimal @db.Decimal(10, 2)
+  pharmacyId  Int
+  pharmacy    Pharmacy @relation(fields: [pharmacyId], references: [id])
+}
+
+model PurchaseHistory {
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  user              User     @relation(fields: [userId], references: [id])
+  pharmacyId        Int
+  pharmacy          Pharmacy @relation(fields: [pharmacyId], references: [id])
+  maskName          String
+  transactionAmount Decimal  @db.Decimal(10, 2)
+  transactionDate   DateTime
+}
